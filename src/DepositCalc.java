@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class DepositCalc {
 
-    private static double initialPayment;               // исходная сумма на вклад
+    private static double initialPayment;               // исходная сумма
     private static double monthlyPayment;               // ежемесячное пополнение с банковского счета
-    private static short limitMultiplicity;             // кратность лимита
+    private static short limitMultiplicity;             // коэффициент лимита
     private static float initialPaymentPercent;         // процент на исходную сумму
     private static float monthlyPaymentPercent;         // процент на ежемесячное пополнение
     private static float monthlyCapitalizationPercent;  // процент на капитализацию
@@ -26,6 +26,10 @@ public class DepositCalc {
         DepositCalc.initialPayment = initialPayment;
     }
 
+    public static double getInitialPayment() {
+        return initialPayment;
+    }
+
     public static void setMonthlyPayment(double monthlyPayment) {
         while (monthlyPayment < 0) {
             System.out.print("Error: число < 0, повторите ввод (допустимые значения: 0 и натуральные числа): ");
@@ -33,6 +37,10 @@ public class DepositCalc {
             monthlyPayment = Double.parseDouble(scanner.nextLine());
         }
         DepositCalc.monthlyPayment = monthlyPayment;
+    }
+
+    public static double getMonthlyPayment() {
+        return monthlyPayment;
     }
 
     public static void setLimitMultiplicity(short limitMultiplicity) {
@@ -44,6 +52,10 @@ public class DepositCalc {
         DepositCalc.limitMultiplicity = limitMultiplicity;
     }
 
+    public static double getLimitMultiplicity() {
+        return limitMultiplicity;
+    }
+
     public static void setInitialPaymentPercent(float initialPaymentPercent) {
         while (initialPaymentPercent < 0 || initialPaymentPercent > 100) {
             System.out.print("Error: число < 0 или > 100, повторите ввод (допустимые значения: от 0 до 100 включительно): ");
@@ -51,6 +63,10 @@ public class DepositCalc {
             initialPaymentPercent = Float.parseFloat(scanner.nextLine());
         }
         DepositCalc.initialPaymentPercent = initialPaymentPercent / 100;
+    }
+
+    public static double getInitialPaymentPercent() {
+        return initialPaymentPercent * 100;
     }
 
     public static void setMonthlyPaymentPercent(float monthlyPaymentPercent) {
@@ -62,6 +78,10 @@ public class DepositCalc {
         DepositCalc.monthlyPaymentPercent = monthlyPaymentPercent / 100;
     }
 
+    public static double getMonthlyPaymentPercent() {
+        return monthlyPaymentPercent * 100;
+    }
+
     public static void setMonthlyCapitalizationPercent(float monthlyCapitalizationPercent) {
         while (monthlyCapitalizationPercent < 0 || monthlyCapitalizationPercent > 100) {
             System.out.print("Error: число < 0 или > 100, повторите ввод (допустимые значения: от 0 до 100 включительно): ");
@@ -69,6 +89,10 @@ public class DepositCalc {
             monthlyCapitalizationPercent = Float.parseFloat(scanner.nextLine());
         }
         DepositCalc.monthlyCapitalizationPercent = monthlyCapitalizationPercent / 100;
+    }
+
+    public static double getMonthlyCapitalizationPercent() {
+        return monthlyCapitalizationPercent * 100;
     }
 
     public static void setLimitAmountPercent(float limitAmountPercent) {
@@ -80,6 +104,10 @@ public class DepositCalc {
         DepositCalc.limitAmountPercent = limitAmountPercent / 100;
     }
 
+    public static double getLimitAmountPercent() {
+        return limitAmountPercent * 100;
+    }
+
     public static void setDepositTerm(short depositTerm) {
         while (depositTerm < 0) {
             System.out.print("Error: число < 1, повторите ввод (допустимые значения: натуральные числа): ");
@@ -89,40 +117,97 @@ public class DepositCalc {
         DepositCalc.depositTerm = depositTerm;
     }
 
+    public static double getDepositTerm() {
+        return depositTerm;
+    }
+
+    public static void printSeparator(){
+        System.out.println("*******************************************************************");
+    }
+
     public static void entryData() {
         Scanner scanner = new Scanner(System.in);
+        String answer;
+        boolean checkEntry = true;
 
-        System.out.print("Введите исходную сумму вклада: ");
-        double initialPayment = Double.parseDouble(scanner.nextLine());
-        setInitialPayment(initialPayment);
+        while (checkEntry) {
+            System.out.print("Введите исходную сумму: ");
+            double initialPayment = Double.parseDouble(scanner.nextLine());
+            setInitialPayment(initialPayment);
 
-        System.out.print("Введите сумму ежемесячного пополнения с банковского счета: ");
-        double monthlyPayment = Double.parseDouble(scanner.nextLine());
-        setMonthlyPayment(monthlyPayment);
+            System.out.print("Введите сумму ежемесячного пополнения (усредненное значение): ");
+            double monthlyPayment = Double.parseDouble(scanner.nextLine());
+            setMonthlyPayment(monthlyPayment);
 
-        System.out.print("Введите кратность лимита: ");
-        short limitMultiplicity = Short.parseShort(scanner.nextLine());
-        setLimitMultiplicity(limitMultiplicity);
+            System.out.print("Введите коэффициент лимита: ");
+            short limitMultiplicity = Short.parseShort(scanner.nextLine());
+            setLimitMultiplicity(limitMultiplicity);
 
-        System.out.print("Введите процент на исходную сумму: ");
-        float initialPaymentPercent = Float.parseFloat(scanner.nextLine());
-        setInitialPaymentPercent(initialPaymentPercent);
+            System.out.print("Введите процент на исходную сумму: ");
+            float initialPaymentPercent = Float.parseFloat(scanner.nextLine());
+            setInitialPaymentPercent(initialPaymentPercent);
 
-        System.out.print("Введите процент на ежемесячное пополнение: ");
-        float monthlyPaymentPercent = Float.parseFloat(scanner.nextLine());
-        setMonthlyPaymentPercent(monthlyPaymentPercent);
+            System.out.print("Введите процент на ежемесячное пополнение: ");
+            float monthlyPaymentPercent = Float.parseFloat(scanner.nextLine());
+            setMonthlyPaymentPercent(monthlyPaymentPercent);
 
-        System.out.print("Введите процент на капитализацию: ");
-        float monthlyCapitalizationPercent = Float.parseFloat(scanner.nextLine());
-        setMonthlyCapitalizationPercent(monthlyCapitalizationPercent);
+            System.out.print("Введите процент на капитализацию: ");
+            float monthlyCapitalizationPercent = Float.parseFloat(scanner.nextLine());
+            setMonthlyCapitalizationPercent(monthlyCapitalizationPercent);
 
-        System.out.print("Введите процент на превышение лимита: ");
-        float limitAmountPercent = Float.parseFloat(scanner.nextLine());
-        setLimitAmountPercent(limitAmountPercent);
+            System.out.print("Введите процент на превышение лимита: ");
+            float limitAmountPercent = Float.parseFloat(scanner.nextLine());
+            setLimitAmountPercent(limitAmountPercent);
 
-        System.out.print("Введите срок вклада (в месяцах): ");
-        short depositTerm = Short.parseShort(scanner.nextLine());
-        setDepositTerm(depositTerm);
+            System.out.print("Введите срок вклада (в месяцах): ");
+            short depositTerm = Short.parseShort(scanner.nextLine());
+            setDepositTerm(depositTerm);
+
+            printSeparator();
+            System.out.println("Подтвердите корректность введенных данных: ");
+            System.out.println("Исходная сумма = " + String.format("%.2f", getInitialPayment()));
+            System.out.println("Cумма ежемесячного пополнения = " + String.format("%.2f", getMonthlyPayment()));
+            System.out.println("Коэффициент лимита = " + String.format("%.0f", getLimitMultiplicity()));
+            System.out.println("Процент на исходную сумму = " + String.format("%.2f", getInitialPaymentPercent()));
+            System.out.println("Процент на ежемесячное пополнение = " + String.format("%.2f", getMonthlyPaymentPercent()));
+            System.out.println("Процент на капитализацию = " + String.format("%.2f", getMonthlyCapitalizationPercent()));
+            System.out.println("Процент на превышение лимита = " + String.format("%.2f", getLimitAmountPercent()));
+            System.out.println("Срок вклада (в месяцах) = " + String.format("%.0f", getDepositTerm()));
+            printSeparator();
+            System.out.print("Данные корректны? (Да/Нет) ");
+            answer = scanner.nextLine();
+            switch (answer) {
+                case "Нет":
+                    printSeparator();
+                    System.out.println("Повторите ввод снова!");
+                    checkEntry = true;
+                    break;
+                case "Да":
+                    checkEntry = false;
+                    break;
+                default:
+                    boolean repeat = true;
+
+                    while (repeat) {
+                        System.out.print("Ввод должен содержать Да или Нет.. ");
+                        answer = scanner.nextLine();
+
+                        switch (answer) {
+                            case "Нет":
+                                printSeparator();
+                                System.out.println("Повторите ввод снова!");
+                                checkEntry = true;
+                                repeat = false;
+                                break;
+                            case "Да":
+                                checkEntry = repeat = false;
+                                break;
+                            default:
+                                repeat = true;
+                        }
+                    }break;
+            }
+        }
     }
 
     public static void incomeCalculation() {
@@ -130,7 +215,7 @@ public class DepositCalc {
         double sumEndMonth = 0;
         limitAmount = initialPayment * limitMultiplicity;
         System.out.println("Сумма лимита = " + limitAmount);
-        System.out.println("***********************************************************");
+        printSeparator();
 
         for (int i = 1; i <= depositTerm; i++) {
             termPayment = i * monthlyPayment;
@@ -145,7 +230,7 @@ public class DepositCalc {
 
                 sumEndMonth = initialPayment + termPayment + termCapitalization;
                 System.out.println("Сумма на депозите на конец 1-го месяца = " + sumEndMonth);
-                System.out.println("***********************************************************");
+                printSeparator();
 
             } else {
                 if (limitAmount > sumEndMonth) {
@@ -159,7 +244,7 @@ public class DepositCalc {
 
                     sumEndMonth = initialPayment + termPayment + termCapitalization;
                     System.out.println("Сумма на депозите на конец " + i + "-го месяца = " + sumEndMonth);
-                    System.out.println("***********************************************************");
+                    printSeparator();
 
                 } else {
                     System.out.println("Пока не доделал =)");
