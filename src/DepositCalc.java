@@ -23,7 +23,7 @@ public class DepositCalc {
 
     public static void setInitialPayment(double initialPayment) {
         while (initialPayment < 0) {
-            System.out.print("Ошибка: число < 0 или ввод пустого значения. Повторите ввод (допустимые значения: 0 и натуральные числа): ");
+            System.out.print("Ошибка: число < 0, повторите ввод (допустимые значения: 0 и натуральные числа): ");
             Scanner scanner = new Scanner(System.in);
             initialPayment = Double.parseDouble(scanner.nextLine());
         }
@@ -207,9 +207,9 @@ public class DepositCalc {
 
             printSeparator();
             System.out.println("Подтвердите корректность введенных данных: ");
-            System.out.println("Исходная сумма = " + (new DecimalFormat( "###,###.##" ).format(getInitialPayment())));
-            System.out.println("Cумма ежемесячного пополнения = " + (new DecimalFormat( "###,###.##" ).format(getMonthlyPayment())));
-            System.out.println("Коэффициент лимита = " + (new DecimalFormat( "###,###.##" ).format(getLimitMultiplicity())));
+            System.out.println("Исходная сумма = " + (new DecimalFormat("###,###.##").format(getInitialPayment())));
+            System.out.println("Cумма ежемесячного пополнения = " + (new DecimalFormat("###,###.##").format(getMonthlyPayment())));
+            System.out.println("Коэффициент лимита = " + (new DecimalFormat("###,###.##").format(getLimitMultiplicity())));
             System.out.println("Процент на исходную сумму = " + String.format("%.2f", getInitialPaymentPercent()));
             System.out.println("Процент на ежемесячное пополнение = " + String.format("%.2f", getMonthlyPaymentPercent()));
             System.out.println("Процент на капитализацию = " + String.format("%.2f", getMonthlyCapitalizationPercent()));
@@ -224,44 +224,38 @@ public class DepositCalc {
         entryData();
         double sumEndMonth = 0;
         limitAmount = initialPayment * limitMultiplicity;
-        System.out.println("Сумма лимита = " + (new DecimalFormat( "###,###.##" ).format(limitAmount)));
+        System.out.println("Сумма лимита = " + (new DecimalFormat("###,###.##").format(limitAmount)));
         printSeparator();
 
         for (int i = 1; i <= depositTerm; i++) {
             termPayment = i * monthlyPayment;
             System.out.println("Месяц " + i);
-            System.out.println("Суммарное пополнение = " + (new DecimalFormat( "###,###.##" ).format(termPayment)));
+            System.out.println("Суммарное пополнение = " + (new DecimalFormat("###,###.##").format(termPayment)));
             if (i == 1) {
-                monthlyCapitalization = (initialPayment * initialPaymentPercent +
-                        termPayment * monthlyPaymentPercent) / 12;
-                System.out.println("Капитализация за месяц = " + (new DecimalFormat( "###,###.##" ).format(monthlyCapitalization)));
-
-                termCapitalization = monthlyCapitalization;
-                System.out.println("Суммарная капитализация за пройденный период = " + (new DecimalFormat( "###,###.##" ).format(termCapitalization)));
-
-                sumEndMonth = initialPayment + termPayment + termCapitalization;
-                System.out.println("Сумма на депозите на конец 1-го месяца = " + (new DecimalFormat( "###,###.##" ).format(sumEndMonth)));
-                printSeparator();
-
+                if (limitAmount > (initialPayment + termPayment)) {
+                    monthlyCapitalization = (initialPayment * initialPaymentPercent +
+                            termPayment * monthlyPaymentPercent) / 12;
+                } else {
+                    monthlyCapitalization = (initialPayment + termPayment) * limitAmountPercent / 12;
+                }
             } else {
                 if (limitAmount > sumEndMonth) {
                     monthlyCapitalization = (initialPayment * initialPaymentPercent +
                             termPayment * monthlyPaymentPercent +
                             monthlyCapitalization * monthlyCapitalizationPercent) / 12;
-                    System.out.println("Капитализация за месяц = " + (new DecimalFormat( "###,###.##" ).format(monthlyCapitalization)));
-
-                    termCapitalization += monthlyCapitalization;
-                    System.out.println("Суммарная капитализация за пройденный период = " + (new DecimalFormat( "###,###.##" ).format(termCapitalization)));
-
-                    sumEndMonth = initialPayment + termPayment + termCapitalization;
-                    System.out.println("Сумма на депозите на конец " + i + "-го месяца = " + (new DecimalFormat( "###,###.##" ).format(sumEndMonth)));
-                    printSeparator();
-
                 } else {
-                    System.out.println("Пока не доделал =)");
+                    monthlyCapitalization = (initialPayment + termPayment + monthlyCapitalization) * limitAmountPercent / 12;
                 }
-                // добавление обработки исключений (ввод пустой строки в сеттере и в методе entryData)
             }
+            System.out.println("Капитализация за месяц = " + (new DecimalFormat("###,###.##").format(monthlyCapitalization)));
+
+            termCapitalization += monthlyCapitalization;
+            System.out.println("Суммарная капитализация за пройденный период = " + (new DecimalFormat("###,###.##").format(termCapitalization)));
+
+            sumEndMonth = initialPayment + termPayment + termCapitalization;
+            System.out.println("Сумма на депозите на конец " + i + "-го месяца = " + (new DecimalFormat("###,###.##").format(sumEndMonth)));
+            // добавление обработки исключений (ввод пустой строки в сеттере и в методе entryData)
+            printSeparator();
         }
     }
 
