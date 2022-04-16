@@ -21,6 +21,10 @@ public class DepositCalc {
     // Служебные поля класса
     private static boolean checkEntry = true;           // флаг проверки корректности ввода
 
+    public DepositCalc() {
+
+    }
+
     public static void setInitialPayment(double initialPayment) {
         while (initialPayment < 0) {
             System.out.print("Ошибка: число < 0, повторите ввод (допустимые значения: 0 и натуральные числа): ");
@@ -278,7 +282,7 @@ public class DepositCalc {
     }
 
     public static void main(String[] args) {
-        DepositCalc depositCalc = new DepositCalc();
-        depositCalc.incomeCalculation();
+//        DepositCalc depositCalc = new DepositCalc();
+//        depositCalc.incomeCalculation();
     }
 }
