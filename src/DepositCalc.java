@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class DepositCalc {
     // Входные данные
+    private static int numberOfComparingDeposits;       // количество депозитов для сравнения
     private static double initialPayment;               // исходная сумма
     private static double monthlyPayment;               // ежемесячное пополнение с банковского счета
     private static short limitMultiplicity;             // коэффициент лимита
