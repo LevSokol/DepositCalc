@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class EntryHandler {
-
+    // Метод, проверяющий ввод целочисленных значений и значений с плавающей точкой
     public static String enrtyStringHandler() {
         Scanner scanner = new Scanner(System.in);
         String regex = "[0-9]+";
@@ -12,7 +12,7 @@ public class EntryHandler {
         }
         return string;
     }
-
+    // Метод, проверяющий корректность ввода на запрос подтверждения
     public static boolean checkEntryConfirmation() {
         System.out.print("Данные корректны? (Да/Нет) ");
         Scanner scanner = new Scanner(System.in);

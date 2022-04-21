@@ -1,6 +1,8 @@
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
+//TODO: корректная обработка ввода чисел с плавающей точкой
+
 public class DepositCalc {
     // Входные данные
     private static double initialPayment;               // исходная сумма
@@ -132,6 +134,7 @@ public class DepositCalc {
     }
 
     // Методы
+    // Метод инициализации полей и проверки корректности ввода
     public static void entryData() {
         while (checkEntry) {
             System.out.print("Введите исходную сумму: ");
@@ -197,7 +200,7 @@ public class DepositCalc {
             EntryHandler.checkEntryConfirmation();
         }
     }
-
+    // Метод рассчета выходных значений капитализации для одного объекта
     public static void incomeCalculation() {
         entryData();
         double sumEndMonth = 0;
