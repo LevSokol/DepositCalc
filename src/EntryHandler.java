@@ -12,4 +12,45 @@ public class EntryHandler {
         }
         return string;
     }
+
+    public static boolean checkEntryConfirmation() {
+        System.out.print("Данные корректны? (Да/Нет) ");
+        Scanner scanner = new Scanner(System.in);
+        String answer = scanner.nextLine();
+        DepositCalc.setCheckEntry(true);
+        switch (answer) {
+            case "Нет":
+                CosmeticAdditions.printSeparator();
+                System.out.println("Повторите ввод!");
+                DepositCalc.setCheckEntry(true);
+                break;
+            case "Да":
+                DepositCalc.setCheckEntry(false);
+                break;
+            default:
+                boolean repeat = true;
+
+                while (repeat) {
+                    System.out.print("Ввод должен содержать Да или Нет! ");
+                    answer = scanner.nextLine();
+
+                    switch (answer) {
+                        case "Нет":
+                            CosmeticAdditions.printSeparator();
+                            System.out.println("Повторите ввод!");
+                            DepositCalc.setCheckEntry(true);
+                            repeat = false;
+                            break;
+                        case "Да":
+                            DepositCalc.setCheckEntry(false);
+                            repeat = DepositCalc.getCheckEntry();
+                            break;
+                        default:
+                            repeat = true;
+                    }
+                }
+                break;
+        }
+        return DepositCalc.getCheckEntry();
+    }
 }

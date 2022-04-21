@@ -21,10 +21,12 @@ public class DepositCalc {
     // Служебные поля класса
     private static boolean checkEntry = true;           // флаг проверки корректности ввода
 
+    // Конструкторы
     public DepositCalc() {
 
     }
 
+    // Сеттеры и геттеры
     public static void setInitialPayment(double initialPayment) {
         while (initialPayment < 0) {
             System.out.print("Ошибка: число < 0, повторите ввод (допустимые значения: 0 и натуральные числа): ");
@@ -117,106 +119,71 @@ public class DepositCalc {
         DepositCalc.depositTerm = depositTerm;
     }
 
+    public static boolean getCheckEntry() {
+        return checkEntry;
+    }
+
+    public static void setCheckEntry(boolean checkEntry) {
+        DepositCalc.checkEntry = checkEntry;
+    }
+
     public static double getDepositTerm() {
         return depositTerm;
     }
 
-    public static void printSeparator() {
-        System.out.println("*******************************************************************");
-    }
-
-    public static boolean checkEntryConfirmation() {
-        System.out.print("Данные корректны? (Да/Нет) ");
-        Scanner scanner = new Scanner(System.in);
-        String answer = scanner.nextLine();
-        checkEntry = true;
-        switch (answer) {
-            case "Нет":
-                printSeparator();
-                System.out.println("Повторите ввод!");
-                checkEntry = true;
-                break;
-            case "Да":
-                checkEntry = false;
-                break;
-            default:
-                boolean repeat = true;
-
-                while (repeat) {
-                    System.out.print("Ввод должен содержать Да или Нет! ");
-                    answer = scanner.nextLine();
-
-                    switch (answer) {
-                        case "Нет":
-                            printSeparator();
-                            System.out.println("Повторите ввод!");
-                            checkEntry = true;
-                            repeat = false;
-                            break;
-                        case "Да":
-                            checkEntry = repeat = false;
-                            break;
-                        default:
-                            repeat = true;
-                    }
-                }
-                break;
-        }
-        return checkEntry;
-    }
-
+    // Методы
     public static void entryData() {
         while (checkEntry) {
             System.out.print("Введите исходную сумму: ");
             double initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
             setInitialPayment(initialPayment);
-            printSeparator();
+            CosmeticAdditions.printSeparator();
 
             System.out.print("Введите сумму ежемесячного пополнения (усредненное значение): ");
             double monthlyPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
             setMonthlyPayment(monthlyPayment);
-            printSeparator();
+            CosmeticAdditions.printSeparator();
 
             System.out.print("Введите коэффициент лимита: ");
             String shortCheck = EntryHandler.enrtyStringHandler();
-            while (Double.parseDouble(shortCheck) < 1 || Double.parseDouble(shortCheck) > 100){
+            while (Double.parseDouble(shortCheck) < 1 || Double.parseDouble(shortCheck) > 100) {
                 System.out.print("Ошибка: число < 1 или > 100. Повторите ввод (допустимые значения: целые числа от 1 до 100 включительно):");
                 shortCheck = EntryHandler.enrtyStringHandler();
             }
             short limitMultiplicity = Short.parseShort(shortCheck);
             setLimitMultiplicity(limitMultiplicity);
-            printSeparator();
+            CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на исходную сумму: ");
             float initialPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
             setInitialPaymentPercent(initialPaymentPercent);
-            printSeparator();
+            CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на ежемесячное пополнение: ");
             float monthlyPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
             setMonthlyPaymentPercent(monthlyPaymentPercent);
-            printSeparator();
+            CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на капитализацию: ");
             float monthlyCapitalizationPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
             setMonthlyCapitalizationPercent(monthlyCapitalizationPercent);
-            printSeparator();
+            CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на превышение лимита: ");
             float limitAmountPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
             setLimitAmountPercent(limitAmountPercent);
-            printSeparator();
+            CosmeticAdditions.printSeparator();
 
             System.out.print("Введите срок вклада (в месяцах): ");
             shortCheck = EntryHandler.enrtyStringHandler();
-            while (Double.parseDouble(shortCheck) < 1 || Double.parseDouble(shortCheck) > 36){
+            while (Double.parseDouble(shortCheck) < 1 || Double.parseDouble(shortCheck) > 36) {
                 System.out.print("Ошибка: число < 1 или > 36. Повторите ввод (допустимые значения: целые числа от 1 до 36 включительно):");
                 shortCheck = EntryHandler.enrtyStringHandler();
             }
             short depositTerm = Short.parseShort(shortCheck);
             setDepositTerm(depositTerm);
 
-            printSeparator();
+            CosmeticAdditions.printSeparator();
             System.out.println("Подтвердите корректность введенных данных: ");
             System.out.println("Исходная сумма = " + (new DecimalFormat("###,###.##").format(getInitialPayment())));
             System.out.println("Cумма ежемесячного пополнения = " + (new DecimalFormat("###,###.##").format(getMonthlyPayment())));
@@ -226,8 +193,8 @@ public class DepositCalc {
             System.out.println("Процент на капитализацию = " + String.format("%.2f", getMonthlyCapitalizationPercent()));
             System.out.println("Процент на превышение лимита = " + String.format("%.2f", getLimitAmountPercent()));
             System.out.println("Срок вклада (в месяцах) = " + String.format("%.0f", getDepositTerm()));
-            printSeparator();
-            checkEntryConfirmation();
+            CosmeticAdditions.printSeparator();
+            EntryHandler.checkEntryConfirmation();
         }
     }
 
@@ -236,7 +203,7 @@ public class DepositCalc {
         double sumEndMonth = 0;
         limitAmount = initialPayment * limitMultiplicity;
         System.out.println("Сумма лимита = " + (new DecimalFormat("###,###.##").format(limitAmount)));
-        printSeparator();
+        CosmeticAdditions.printSeparator();
 
         for (int i = 1; i <= depositTerm; i++) {
             termPayment = i * monthlyPayment;
@@ -266,7 +233,7 @@ public class DepositCalc {
             sumEndMonth = initialPayment + termPayment + termCapitalization;
             System.out.println("Сумма на депозите на конец " + i + "-го месяца = " + (new DecimalFormat("###,###.##").format(sumEndMonth)));
             // добавление обработки исключений (ввод пустой строки в сеттере и в методе entryData)
-            printSeparator();
+            CosmeticAdditions.printSeparator();
         }
     }
 
