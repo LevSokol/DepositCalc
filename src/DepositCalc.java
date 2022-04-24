@@ -1,5 +1,4 @@
 import java.text.DecimalFormat;
-import java.util.Scanner;
 
 //TODO: корректная обработка ввода чисел с плавающей точкой
 
@@ -22,7 +21,8 @@ public class DepositCalc {
     private static double limitAmount;                  // сумма лимита (limitMultiplicity-кратная изначальная сумма на вклад)
 
     // Служебные поля класса
-    private static boolean checkEntry = true;           // флаг проверки корректности ввода
+    private static boolean isSourceDataIncorrect = true;           // флаг проверки корректности ввода
+    private static boolean isExportResultToFile;           // флаг проверки на экспорт результата в файл
 
     // Конструкторы
     public DepositCalc() {
@@ -122,12 +122,20 @@ public class DepositCalc {
         DepositCalc.depositTerm = depositTerm;
     }
 
-    public static boolean getCheckEntry() {
-        return checkEntry;
+    public static boolean getIsSourceDataIncorrect() {
+        return isSourceDataIncorrect;
     }
 
-    public static void setCheckEntry(boolean checkEntry) {
-        DepositCalc.checkEntry = checkEntry;
+    public static void setIsSourceDataIncorrect(boolean isSourceDataIncorrect) {
+        DepositCalc.isSourceDataIncorrect = isSourceDataIncorrect;
+    }
+
+    public static boolean getIsExportResultToFile() {
+        return isExportResultToFile;
+    }
+
+    public static void setIsExportResultToFile(boolean isSourceDataIncorrect) {
+        DepositCalc.isExportResultToFile = isSourceDataIncorrect;
     }
 
     public static double getDepositTerm() {
@@ -137,7 +145,7 @@ public class DepositCalc {
     // Методы
     // Метод инициализации полей и проверки корректности ввода
     public static void entryData() {
-        while (checkEntry) {
+        while (isSourceDataIncorrect) {
             System.out.print("Введите исходную сумму: ");
             double initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
             setInitialPayment(initialPayment);
@@ -198,7 +206,7 @@ public class DepositCalc {
             System.out.println("Процент на превышение лимита = " + String.format("%.2f", getLimitAmountPercent()));
             System.out.println("Срок вклада (в месяцах) = " + String.format("%.0f", getDepositTerm()));
             CosmeticAdditions.printSeparator();
-            EntryHandler.checkEntryConfirmation();
+            EntryHandler.isRepeatEntrySourceData();
         }
     }
     // Метод рассчета выходных значений капитализации для одного объекта
@@ -241,7 +249,15 @@ public class DepositCalc {
         }
     }
 
+    public static boolean isExportResultToFile(){
+        while (isExportResultToFile){
+            EntryHandler.isExportResultToFile();
+        }
+        return isExportResultToFile;
+    }
+
     public static void main(String[] args) {
+//        isExportResultToFile();
         DepositCalc depositCalc = new DepositCalc();
         depositCalc.incomeCalculation();
     }
