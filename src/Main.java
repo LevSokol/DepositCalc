@@ -18,8 +18,10 @@ public class Main {
         for (int i = 1; i <= numberOfComparingDeposits; i++) {
             objects.add(new DepositCalc());
         }
+        //Debug step
         for (int j = 0; j < objects.size(); j++) {
             System.out.println(objects.get(j));
         }
+
     }
 }

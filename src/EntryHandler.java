@@ -1,3 +1,4 @@
+import javax.sound.midi.Soundbank;
 import java.util.Scanner;
 
 public class EntryHandler {
@@ -12,7 +13,8 @@ public class EntryHandler {
         }
         return string;
     }
-    // Метод, проверяющий корректность ввода на запрос подтверждения
+
+    // Метод, проверяющий корректность ввода на запрос подтверждения (с повторным вводом данных)
     public static boolean checkEntryConfirmation() {
         System.out.print("Данные корректны? (Да/Нет) ");
         Scanner scanner = new Scanner(System.in);
@@ -43,7 +45,41 @@ public class EntryHandler {
                             break;
                         case "Да":
                             DepositCalc.setCheckEntry(false);
-                            repeat = DepositCalc.getCheckEntry();
+                            repeat = false;
+                            break;
+                        default:
+                            repeat = true;
+                    }
+                }
+                break;
+        }
+        return DepositCalc.getCheckEntry();
+    }
+
+    public static boolean checkEntryConfirmationWithoutRepeatEntry() {
+        Scanner scanner = new Scanner(System.in);
+        String answer = scanner.nextLine();
+        DepositCalc.setIsSaveToFile(false);
+        switch (answer) {
+            case "Нет":
+                DepositCalc.setIsSaveToFile(false);
+                break;
+            case "Да":
+                DepositCalc.setIsSaveToFile(true);
+                break;
+            default:
+                boolean repeat = true;
+                while (repeat) {
+                    System.out.print("Ввод должен содержать Да или Нет! ");
+                    answer = scanner.nextLine();
+                    switch (answer) {
+                        case "Нет":
+                            DepositCalc.setIsSaveToFile(false);
+                            repeat = false;
+                            break;
+                        case "Да":
+                            DepositCalc.setIsSaveToFile(true);
+                            repeat = false;
                             break;
                         default:
                             repeat = true;

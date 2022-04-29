@@ -21,8 +21,10 @@ public class DepositCalc {
     private static double termPayment;                  // суммарное пополнение на текущий срок вклада
     private static double limitAmount;                  // сумма лимита (limitMultiplicity-кратная изначальная сумма на вклад)
 
-    // Служебные поля класса
+    // Дополнительные поля класса
     private static boolean checkEntry = true;           // флаг проверки корректности ввода
+    private static boolean isSaveToFile = false;        // индикатор сохранения вычислений в файл
+    private static String fileName;                     // имя файла для сохранения результатов
 
     // Конструкторы
     public DepositCalc() {
@@ -134,6 +136,14 @@ public class DepositCalc {
         return depositTerm;
     }
 
+    public static void setIsSaveToFile(boolean isSaveToFile) {
+        DepositCalc.isSaveToFile = isSaveToFile;
+    }
+
+    public static boolean getIsSaveToFile() {
+        return isSaveToFile;
+    }
+
     // Методы
     // Метод инициализации полей и проверки корректности ввода
     public static void entryData() {
@@ -201,7 +211,20 @@ public class DepositCalc {
             EntryHandler.checkEntryConfirmation();
         }
     }
-    // Метод рассчета выходных значений капитализации для одного объекта
+
+    // Метод определения варианта для сохранения результата (CLI|file)
+    public static String isSaveToFile() {
+        System.out.print("Сохранить результаты рассчета в файл? (Да/Нет) ");
+        EntryHandler.checkEntryConfirmationWithoutRepeatEntry();
+        if (getIsSaveToFile()) {
+            System.out.print("Введите имя файла: ");
+            Scanner scanner = new Scanner(System.in);
+            fileName = scanner.nextLine();
+        }
+        return fileName;
+    }
+
+    // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в CLI
     public static void incomeCalculation() {
         entryData();
         double sumEndMonth = 0;
@@ -242,7 +265,8 @@ public class DepositCalc {
     }
 
     public static void main(String[] args) {
-        DepositCalc depositCalc = new DepositCalc();
-        depositCalc.incomeCalculation();
+        isSaveToFile();
+//        DepositCalc depositCalc = new DepositCalc();
+//        depositCalc.incomeCalculation();
     }
 }
