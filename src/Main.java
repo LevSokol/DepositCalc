@@ -3,9 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static int numberOfComparingDeposits = 0;
-
-
+    private static int numberOfComparingDeposits;
 
     public static void main(String[] args) {
         //TODO: перенести в отдельный метод в класс DepositCalc

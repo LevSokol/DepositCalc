@@ -1,8 +1,6 @@
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
-//TODO: корректная обработка ввода чисел с плавающей точкой
-
 public class DepositCalc {
     // Входные данные
     private static int numberOfComparingDeposits;       // количество депозитов для сравнения
@@ -22,7 +20,7 @@ public class DepositCalc {
     private static double limitAmount;                  // сумма лимита (limitMultiplicity-кратная изначальная сумма на вклад)
 
     // Дополнительные поля класса
-    private static boolean checkEntry = true;           // флаг проверки корректности ввода
+    private static boolean isSourceDataIncorrect = true;// флаг проверки корректности ввода
     private static boolean isSaveToFile = false;        // индикатор сохранения вычислений в файл
     private static String fileName;                     // имя файла для сохранения результатов
 
@@ -124,12 +122,12 @@ public class DepositCalc {
         DepositCalc.depositTerm = depositTerm;
     }
 
-    public static boolean getCheckEntry() {
-        return checkEntry;
+    public static boolean getIsSourceDataIncorrect() {
+        return isSourceDataIncorrect;
     }
 
-    public static void setCheckEntry(boolean checkEntry) {
-        DepositCalc.checkEntry = checkEntry;
+    public static void setIsSourceDataIncorrect(boolean isSourceDataIncorrect) {
+        DepositCalc.isSourceDataIncorrect = isSourceDataIncorrect;
     }
 
     public static double getDepositTerm() {
@@ -147,7 +145,7 @@ public class DepositCalc {
     // Методы
     // Метод инициализации полей и проверки корректности ввода
     public static void entryData() {
-        while (checkEntry) {
+        while (isSourceDataIncorrect) {
             System.out.print("Введите исходную сумму: ");
             double initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
             setInitialPayment(initialPayment);
@@ -208,24 +206,26 @@ public class DepositCalc {
             System.out.println("Процент на превышение лимита = " + String.format("%.2f", getLimitAmountPercent()));
             System.out.println("Срок вклада (в месяцах) = " + String.format("%.0f", getDepositTerm()));
             CosmeticAdditions.printSeparator();
-            EntryHandler.checkEntryConfirmation();
+            EntryHandler.isRepeatEntrySourceData();
         }
     }
 
     // Метод определения варианта для сохранения результата (CLI|file)
-    public static String isSaveToFile() {
+    public static void isSaveToFile() {
         System.out.print("Сохранить результаты рассчета в файл? (Да/Нет) ");
         EntryHandler.checkEntryConfirmationWithoutRepeatEntry();
         if (getIsSaveToFile()) {
             System.out.print("Введите имя файла: ");
             Scanner scanner = new Scanner(System.in);
             fileName = scanner.nextLine();
+            incomeCalculationOutputFile(fileName);
+        } else {
+            incomeCalculationOutputCLI();
         }
-        return fileName;
     }
 
     // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в CLI
-    public static void incomeCalculation() {
+    public static void incomeCalculationOutputCLI() {
         entryData();
         double sumEndMonth = 0;
         limitAmount = initialPayment * limitMultiplicity;
@@ -264,9 +264,14 @@ public class DepositCalc {
         }
     }
 
+    // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в CLI
+    public static void incomeCalculationOutputFile(String fileName){
+        System.out.println("Тут будет метод сохранения вычислений в файл");
+    }
+
     public static void main(String[] args) {
         isSaveToFile();
 //        DepositCalc depositCalc = new DepositCalc();
-//        depositCalc.incomeCalculation();
+//        depositCalc.incomeCalculationOutputCLI();
     }
 }

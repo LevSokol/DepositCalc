@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class EntryHandler {
     // Метод, проверяющий ввод целочисленных значений и значений с плавающей точкой
+    //TODO: корректная обработка ввода чисел с плавающей точкой
     public static String enrtyStringHandler() {
         Scanner scanner = new Scanner(System.in);
         String regex = "[0-9]+";
@@ -14,20 +15,20 @@ public class EntryHandler {
         return string;
     }
 
-    // Метод, проверяющий корректность ввода на запрос подтверждения (с повторным вводом данных)
-    public static boolean checkEntryConfirmation() {
+    // Метод, проверяющий необходимость повторного ввода данных
+    public static boolean isRepeatEntrySourceData() {
         System.out.print("Данные корректны? (Да/Нет) ");
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
-        DepositCalc.setCheckEntry(true);
+        DepositCalc.setIsSourceDataIncorrect(true);
         switch (answer) {
             case "Нет":
                 CosmeticAdditions.printSeparator();
                 System.out.println("Повторите ввод!");
-                DepositCalc.setCheckEntry(true);
+                DepositCalc.setIsSourceDataIncorrect(true);
                 break;
             case "Да":
-                DepositCalc.setCheckEntry(false);
+                DepositCalc.setIsSourceDataIncorrect(false);
                 break;
             default:
                 boolean repeat = true;
@@ -40,11 +41,11 @@ public class EntryHandler {
                         case "Нет":
                             CosmeticAdditions.printSeparator();
                             System.out.println("Повторите ввод!");
-                            DepositCalc.setCheckEntry(true);
+                            DepositCalc.setIsSourceDataIncorrect(true);
                             repeat = false;
                             break;
                         case "Да":
-                            DepositCalc.setCheckEntry(false);
+                            DepositCalc.setIsSourceDataIncorrect(false);
                             repeat = false;
                             break;
                         default:
@@ -53,7 +54,7 @@ public class EntryHandler {
                 }
                 break;
         }
-        return DepositCalc.getCheckEntry();
+        return DepositCalc.getIsSourceDataIncorrect();
     }
 
     public static boolean checkEntryConfirmationWithoutRepeatEntry() {
@@ -87,6 +88,6 @@ public class EntryHandler {
                 }
                 break;
         }
-        return DepositCalc.getCheckEntry();
+        return DepositCalc.getIsSourceDataIncorrect();
     }
 }
