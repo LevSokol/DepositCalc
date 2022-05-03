@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
@@ -211,7 +213,8 @@ public class DepositCalc {
     }
 
     // Метод определения варианта для сохранения результата (CLI|file)
-    public static void isSaveToFile() {
+    public static void depositCalculation() {
+        entryData();
         System.out.print("Сохранить результаты рассчета в файл? (Да/Нет) ");
         EntryHandler.checkEntryConfirmationWithoutRepeatEntry();
         if (getIsSaveToFile()) {
@@ -226,7 +229,6 @@ public class DepositCalc {
 
     // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в CLI
     public static void incomeCalculationOutputCLI() {
-        entryData();
         double sumEndMonth = 0;
         limitAmount = initialPayment * limitMultiplicity;
         System.out.println("Сумма лимита = " + (new DecimalFormat("###,###.##").format(limitAmount)));
@@ -265,12 +267,63 @@ public class DepositCalc {
     }
 
     // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в CLI
-    public static void incomeCalculationOutputFile(String fileName){
-        System.out.println("Тут будет метод сохранения вычислений в файл");
+    public static void incomeCalculationOutputFile(String fileName) {
+        double sumEndMonth = 0;
+        try {
+            FileWriter file = new FileWriter(fileName, false);
+            file.write("Исходная сумма = " + (new DecimalFormat("###,###.##").format(getInitialPayment())) + "\n");
+            file.append("Cумма ежемесячного пополнения = " + (new DecimalFormat("###,###.##").format(getMonthlyPayment())) + "\n");
+            file.append("Коэффициент лимита = " + (new DecimalFormat("###,###.##").format(getLimitMultiplicity())) + "\n");
+            file.append("Процент на исходную сумму = " + String.format("%.2f", getInitialPaymentPercent()) + "\n");
+            file.append("Процент на ежемесячное пополнение = " + String.format("%.2f", getMonthlyPaymentPercent()) + "\n");
+            file.append("Процент на капитализацию = " + String.format("%.2f", getMonthlyCapitalizationPercent()) + "\n");
+            file.append("Процент на превышение лимита = " + String.format("%.2f", getLimitAmountPercent()) + "\n");
+            file.append("Срок вклада (в месяцах) = " + String.format("%.0f", getDepositTerm()) + "\n");
+            limitAmount = initialPayment * limitMultiplicity;
+            file.append("Сумма лимита = " + (new DecimalFormat("###,###.##").format(limitAmount)) + "\n");
+            file.append(CosmeticAdditions.separator + "\n");
+
+            for (int i = 1; i <= depositTerm; i++) {
+                termPayment = i * monthlyPayment;
+                file.append("Месяц " + i + "\n");
+                file.append("Суммарное пополнение = " + (new DecimalFormat("###,###.##").format(termPayment)) + "\n");
+                if (i == 1) {
+                    if (limitAmount > (initialPayment + termPayment)) {
+                        monthlyCapitalization = (initialPayment * initialPaymentPercent +
+                                termPayment * monthlyPaymentPercent) / 12;
+                    } else {
+                        monthlyCapitalization = (initialPayment + termPayment) * limitAmountPercent / 12;
+                    }
+                } else {
+                    if (limitAmount > sumEndMonth) {
+                        monthlyCapitalization = (initialPayment * initialPaymentPercent +
+                                termPayment * monthlyPaymentPercent +
+                                monthlyCapitalization * monthlyCapitalizationPercent) / 12;
+                    } else {
+                        monthlyCapitalization = (initialPayment + termPayment + monthlyCapitalization) * limitAmountPercent / 12;
+                    }
+                }
+                file.append("Капитализация за месяц = " + (new DecimalFormat("###,###.##").format(monthlyCapitalization)) + "\n");
+
+                termCapitalization += monthlyCapitalization;
+                file.append("Суммарная капитализация за пройденный период = " + (new DecimalFormat("###,###.##").format(termCapitalization)) + "\n");
+
+                sumEndMonth = initialPayment + termPayment + termCapitalization;
+                file.append("Сумма на депозите на конец " + i + "-го месяца = " + (new DecimalFormat("###,###.##").format(sumEndMonth)) + "\n");
+                // добавление обработки исключений (ввод пустой строки в сеттере и в методе entryData)
+                file.append(CosmeticAdditions.separator + "\n");
+                file.flush();
+            }
+            System.out.println("Вычисления сохранены в файл " + fileName + " корневого каталога проекта!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("Вычисления не были сохранены в файл " + fileName + "!");
+        }
     }
 
     public static void main(String[] args) {
-        isSaveToFile();
+        depositCalculation();
 //        DepositCalc depositCalc = new DepositCalc();
 //        depositCalc.incomeCalculationOutputCLI();
     }
