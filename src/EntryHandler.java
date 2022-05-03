@@ -3,13 +3,12 @@ import java.util.Scanner;
 
 public class EntryHandler {
     // Метод, проверяющий ввод целочисленных значений и значений с плавающей точкой
-    //TODO: корректная обработка ввода чисел с плавающей точкой
     public static String enrtyStringHandler() {
         Scanner scanner = new Scanner(System.in);
-        String regex = "[0-9]+";
+        String regex = "([0-9]+|[0-9]+\\.[0-9]+)";
         String string = scanner.nextLine();
         while (string.isEmpty() || !string.matches(regex)) {
-            System.out.print("Ошибка: введённая строка пустая или содержит нецифровые символы! Повторите ввод: ");
+            System.out.print("Ошибка: введённая строка пустая или содержит пробел и/или нецифровые символы! Повторите ввод: ");
             string = scanner.nextLine();
         }
         return string;
@@ -57,6 +56,7 @@ public class EntryHandler {
         return DepositCalc.getIsSourceDataIncorrect();
     }
 
+    // Метод, проверяющий корректность бинарного выбора
     public static boolean checkEntryConfirmationWithoutRepeatEntry() {
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
