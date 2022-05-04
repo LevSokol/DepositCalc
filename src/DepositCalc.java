@@ -25,6 +25,7 @@ public class DepositCalc {
     private static boolean isSourceDataIncorrect = true;// флаг проверки корректности ввода
     private static boolean isSaveToFile = false;        // индикатор сохранения вычислений в файл
     private static String fileName;                     // имя файла для сохранения результатов
+    private static String regexIntAmdFloatNumbers = "([0-9]+|[0-9]+\\.[0-9]+)";
 
     // Конструкторы
     public DepositCalc() {
@@ -35,7 +36,7 @@ public class DepositCalc {
     public static void setInitialPayment(double initialPayment) {
         while (initialPayment < 0) {
             System.out.print("Ошибка: число < 0, повторите ввод (допустимые значения: 0 и натуральные числа): ");
-            initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
+            initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.initialPayment = initialPayment;
     }
@@ -47,7 +48,7 @@ public class DepositCalc {
     public static void setMonthlyPayment(double monthlyPayment) {
         while (monthlyPayment < 0) {
             System.out.print("Ошибка: число < 0. Повторите ввод (допустимые значения: 0 и натуральные числа): ");
-            monthlyPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
+            monthlyPayment = Double.parseDouble(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.monthlyPayment = monthlyPayment;
     }
@@ -59,7 +60,7 @@ public class DepositCalc {
     public static void setLimitMultiplicity(short limitMultiplicity) {
         while (limitMultiplicity < 0) {
             System.out.print("Ошибка: число < 0. Повторите ввод (допустимые значения: 0 и натуральные числа): ");
-            limitMultiplicity = Short.parseShort(EntryHandler.enrtyStringHandler());
+            limitMultiplicity = Short.parseShort(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.limitMultiplicity = limitMultiplicity;
     }
@@ -71,7 +72,7 @@ public class DepositCalc {
     public static void setInitialPaymentPercent(float initialPaymentPercent) {
         while (initialPaymentPercent < 0 || initialPaymentPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
-            initialPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            initialPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.initialPaymentPercent = initialPaymentPercent / 100;
     }
@@ -83,7 +84,7 @@ public class DepositCalc {
     public static void setMonthlyPaymentPercent(float monthlyPaymentPercent) {
         while (monthlyPaymentPercent < 0 || monthlyPaymentPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
-            monthlyPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            monthlyPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.monthlyPaymentPercent = monthlyPaymentPercent / 100;
     }
@@ -95,7 +96,7 @@ public class DepositCalc {
     public static void setMonthlyCapitalizationPercent(float monthlyCapitalizationPercent) {
         while (monthlyCapitalizationPercent < 0 || monthlyCapitalizationPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
-            monthlyCapitalizationPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            monthlyCapitalizationPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.monthlyCapitalizationPercent = monthlyCapitalizationPercent / 100;
     }
@@ -107,7 +108,7 @@ public class DepositCalc {
     public static void setLimitAmountPercent(float limitAmountPercent) {
         while (limitAmountPercent < 0 || limitAmountPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
-            limitAmountPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            limitAmountPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.limitAmountPercent = limitAmountPercent / 100;
     }
@@ -119,7 +120,7 @@ public class DepositCalc {
     public static void setDepositTerm(short depositTerm) {
         while (depositTerm < 0) {
             System.out.print("Ошибка: число < 1. Повторите ввод (допустимые значения: натуральные числа): ");
-            depositTerm = Short.parseShort(EntryHandler.enrtyStringHandler());
+            depositTerm = Short.parseShort(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
         DepositCalc.depositTerm = depositTerm;
     }
@@ -149,50 +150,50 @@ public class DepositCalc {
     public static void entryData() {
         while (isSourceDataIncorrect) {
             System.out.print("Введите исходную сумму: ");
-            double initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
+            double initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
             setInitialPayment(initialPayment);
             CosmeticAdditions.printSeparator();
 
             System.out.print("Введите сумму ежемесячного пополнения (усредненное значение): ");
-            double monthlyPayment = Double.parseDouble(EntryHandler.enrtyStringHandler());
+            double monthlyPayment = Double.parseDouble(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
             setMonthlyPayment(monthlyPayment);
             CosmeticAdditions.printSeparator();
 
             System.out.print("Введите коэффициент лимита: ");
-            String shortCheck = EntryHandler.enrtyStringHandler();
+            String shortCheck = EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers);
             while (Double.parseDouble(shortCheck) < 1 || Double.parseDouble(shortCheck) > 100) {
                 System.out.print("Ошибка: число < 1 или > 100. Повторите ввод (допустимые значения: целые числа от 1 до 100 включительно):");
-                shortCheck = EntryHandler.enrtyStringHandler();
+                shortCheck = EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers);
             }
             short limitMultiplicity = Short.parseShort(shortCheck);
             setLimitMultiplicity(limitMultiplicity);
             CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на исходную сумму: ");
-            float initialPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            float initialPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
             setInitialPaymentPercent(initialPaymentPercent);
             CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на ежемесячное пополнение: ");
-            float monthlyPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            float monthlyPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
             setMonthlyPaymentPercent(monthlyPaymentPercent);
             CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на капитализацию: ");
-            float monthlyCapitalizationPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            float monthlyCapitalizationPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
             setMonthlyCapitalizationPercent(monthlyCapitalizationPercent);
             CosmeticAdditions.printSeparator();
 
             System.out.print("Введите процент на превышение лимита: ");
-            float limitAmountPercent = Float.parseFloat(EntryHandler.enrtyStringHandler());
+            float limitAmountPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
             setLimitAmountPercent(limitAmountPercent);
             CosmeticAdditions.printSeparator();
 
             System.out.print("Введите срок вклада (в месяцах): ");
-            shortCheck = EntryHandler.enrtyStringHandler();
+            shortCheck = EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers);
             while (Double.parseDouble(shortCheck) < 1 || Double.parseDouble(shortCheck) > 36) {
                 System.out.print("Ошибка: число < 1 или > 36. Повторите ввод (допустимые значения: целые числа от 1 до 36 включительно):");
-                shortCheck = EntryHandler.enrtyStringHandler();
+                shortCheck = EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers);
             }
             short depositTerm = Short.parseShort(shortCheck);
             setDepositTerm(depositTerm);

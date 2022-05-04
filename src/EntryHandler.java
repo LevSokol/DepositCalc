@@ -2,13 +2,24 @@ import javax.sound.midi.Soundbank;
 import java.util.Scanner;
 
 public class EntryHandler {
-    // Метод, проверяющий ввод целочисленных значений и значений с плавающей точкой
-    public static String enrtyStringHandler() {
+    // Метод, ограничивающий ввод пустой строки и подстроки, несоответствующие регулярному выражению
+    public static String enrtyStringHandler(String regex) {
         Scanner scanner = new Scanner(System.in);
-        String regex = "([0-9]+|[0-9]+\\.[0-9]+)";
         String string = scanner.nextLine();
         while (string.isEmpty() || !string.matches(regex)) {
-            System.out.print("Ошибка: введённая строка пустая или содержит пробел и/или нецифровые символы! Повторите ввод: ");
+            System.out.print("Ошибка: введённая строка пустая, содержит недопустимые символы или " +
+                    "значение выходит за границы диапазона! Повторите ввод: ");
+            string = scanner.nextLine();
+        }
+        return string;
+    }
+
+    // Метод, ограничивающий ввод пустой строки
+    public static String enrtyStringEmpty() {
+        Scanner scanner = new Scanner(System.in);
+        String string = scanner.nextLine();
+        while (string.isEmpty()) {
+            System.out.print("Ошибка: введённая строка пустая! Повторите ввод: ");
             string = scanner.nextLine();
         }
         return string;
