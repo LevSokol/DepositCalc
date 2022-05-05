@@ -1,11 +1,13 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class DepositCalc {
     // Входные данные
-    private static int numberOfComparingDeposits;       // количество депозитов для сравнения
     private static double initialPayment;               // исходная сумма
     private static double monthlyPayment;               // ежемесячное пополнение с банковского счета
     private static short limitMultiplicity;             // коэффициент лимита
@@ -22,10 +24,23 @@ public class DepositCalc {
     private static double limitAmount;                  // сумма лимита (limitMultiplicity-кратная изначальная сумма на вклад)
 
     // Дополнительные поля класса
-    private static boolean isSourceDataIncorrect = true;// флаг проверки корректности ввода
-    private static boolean isSaveToFile = false;        // индикатор сохранения вычислений в файл
-    private static String fileName;                     // имя файла для сохранения результатов
+    private static boolean isSourceDataIncorrect = true;                        // флаг проверки корректности ввода
+    private static boolean isSaveToFile = false;                                // индикатор сохранения вычислений в файл
+    private static String fileName;                                             // имя файла для сохранения результатов
+    private static int numberOfComparingDeposits;                               // количество депозитов для сравнения
     private static String regexIntAmdFloatNumbers = "([0-9]+|[0-9]+\\.[0-9]+)";
+    private static String regexNumOfComparingDeposits = "[1-4]+";
+    private static String[] depositsNames;
+
+    public static void determineNumberOfDeposits() {
+        System.out.print("Введите число сравниваемых депозитов (не более 4): ");
+        String result = EntryHandler.enrtyStringHandler(regexNumOfComparingDeposits);
+        numberOfComparingDeposits = Integer.parseInt(result);
+        for (int i = 0; i < numberOfComparingDeposits; i++) {
+            System.out.print("Введите имя для депозита №" + (i + 1) + ": ");
+            String name = EntryHandler.enrtyStringEmpty();
+        }
+    }
 
     // Конструкторы
     public DepositCalc() {
@@ -267,7 +282,7 @@ public class DepositCalc {
         }
     }
 
-    // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в CLI
+    // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в файл
     public static void incomeCalculationOutputFile(String fileName) {
         double sumEndMonth = 0;
         try {
@@ -321,6 +336,10 @@ public class DepositCalc {
             System.out.println(e.getMessage());
             System.out.println("Вычисления не были сохранены в файл " + fileName + "!");
         }
+    }
+
+    public static void comparisonOfDeposits(){
+
     }
 
     public static void main(String[] args) {

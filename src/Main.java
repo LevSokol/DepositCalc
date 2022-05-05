@@ -20,7 +20,7 @@ public class Main {
             System.out.print("Введите имя для депозита №" + (i + 1) + ": ");
             String name = EntryHandler.enrtyStringEmpty();
             baseOfObjects.put(objects.get(i), name);
-            System.out.println(baseOfObjects.get(objects.get(i)));
+            //System.out.println(baseOfObjects.get(objects.get(i)));
         }
         //Debug step
 //        for (int j = 0; j < objects.size(); j++) {
