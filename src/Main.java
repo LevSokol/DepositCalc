@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     private static int numberOfComparingDeposits;
@@ -13,10 +12,10 @@ public class Main {
         String result = EntryHandler.enrtyStringHandler(regex);
         numberOfComparingDeposits = Integer.parseInt(result);
 
-        List<DepositCalc> objects = new ArrayList<DepositCalc>();
-        HashMap<DepositCalc, String> baseOfObjects = new HashMap<>();
+        List<DepositCalculation> objects = new ArrayList<DepositCalculation>();
+        HashMap<DepositCalculation, String> baseOfObjects = new HashMap<>();
         for (int i = 0; i < numberOfComparingDeposits; i++) {
-            objects.add(new DepositCalc());
+            objects.add(new DepositCalculation());
             System.out.print("Введите имя для депозита №" + (i + 1) + ": ");
             String name = EntryHandler.enrtyStringEmpty();
             baseOfObjects.put(objects.get(i), name);

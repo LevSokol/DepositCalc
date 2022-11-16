@@ -1,4 +1,3 @@
-import javax.sound.midi.Soundbank;
 import java.util.Scanner;
 
 public class EntryHandler {
@@ -30,15 +29,15 @@ public class EntryHandler {
         System.out.print("Данные корректны? (Да/Нет) ");
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
-        DepositCalc.setIsSourceDataIncorrect(true);
+        DepositCalculation.setIsSourceDataIncorrect(true);
         switch (answer) {
             case "Нет":
                 CosmeticAdditions.printSeparator();
                 System.out.println("Повторите ввод!");
-                DepositCalc.setIsSourceDataIncorrect(true);
+                DepositCalculation.setIsSourceDataIncorrect(true);
                 break;
             case "Да":
-                DepositCalc.setIsSourceDataIncorrect(false);
+                DepositCalculation.setIsSourceDataIncorrect(false);
                 break;
             default:
                 boolean repeat = true;
@@ -51,11 +50,11 @@ public class EntryHandler {
                         case "Нет":
                             CosmeticAdditions.printSeparator();
                             System.out.println("Повторите ввод!");
-                            DepositCalc.setIsSourceDataIncorrect(true);
+                            DepositCalculation.setIsSourceDataIncorrect(true);
                             repeat = false;
                             break;
                         case "Да":
-                            DepositCalc.setIsSourceDataIncorrect(false);
+                            DepositCalculation.setIsSourceDataIncorrect(false);
                             repeat = false;
                             break;
                         default:
@@ -64,20 +63,20 @@ public class EntryHandler {
                 }
                 break;
         }
-        return DepositCalc.getIsSourceDataIncorrect();
+        return DepositCalculation.getIsSourceDataIncorrect();
     }
 
     // Метод, проверяющий корректность бинарного выбора
     public static boolean checkEntryConfirmationWithoutRepeatEntry() {
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
-        DepositCalc.setIsSaveToFile(false);
+        DepositCalculation.setIsSaveToFile(false);
         switch (answer) {
             case "Нет":
-                DepositCalc.setIsSaveToFile(false);
+                DepositCalculation.setIsSaveToFile(false);
                 break;
             case "Да":
-                DepositCalc.setIsSaveToFile(true);
+                DepositCalculation.setIsSaveToFile(true);
                 break;
             default:
                 boolean repeat = true;
@@ -86,11 +85,11 @@ public class EntryHandler {
                     answer = scanner.nextLine();
                     switch (answer) {
                         case "Нет":
-                            DepositCalc.setIsSaveToFile(false);
+                            DepositCalculation.setIsSaveToFile(false);
                             repeat = false;
                             break;
                         case "Да":
-                            DepositCalc.setIsSaveToFile(true);
+                            DepositCalculation.setIsSaveToFile(true);
                             repeat = false;
                             break;
                         default:
@@ -99,6 +98,6 @@ public class EntryHandler {
                 }
                 break;
         }
-        return DepositCalc.getIsSourceDataIncorrect();
+        return DepositCalculation.getIsSourceDataIncorrect();
     }
 }

@@ -1,27 +1,24 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
-public class DepositCalc {
+public class DepositCalculation {
     // Входные данные
-    private static double initialPayment;               // исходная сумма
-    private static double monthlyPayment;               // ежемесячное пополнение с банковского счета
-    private static short limitMultiplicity;             // коэффициент лимита
-    private static float initialPaymentPercent;         // процент на исходную сумму
-    private static float monthlyPaymentPercent;         // процент на ежемесячное пополнение
-    private static float monthlyCapitalizationPercent;  // процент на капитализацию
-    private static float limitAmountPercent;            // процент на превышение лимита
-    private static short depositTerm;                   // срок вклада (в месяцах)
+    private double initialPayment;               // исходная сумма
+    private double monthlyPayment;               // ежемесячное пополнение с банковского счета
+    private short limitMultiplicity;             // коэффициент лимита
+    private float initialPaymentPercent;         // процент на исходную сумму
+    private float monthlyPaymentPercent;         // процент на ежемесячное пополнение
+    private float monthlyCapitalizationPercent;  // процент на капитализацию
+    private float limitAmountPercent;            // процент на превышение лимита
+    private short depositTerm;                   // срок вклада (в месяцах)
 
     // Рассчетные данные
-    private static double monthlyCapitalization;        // ежемесячная капитализация по депозиту
-    private static double termCapitalization;           // суммарная капитализация на текущий срок вклада
-    private static double termPayment;                  // суммарное пополнение на текущий срок вклада
-    private static double limitAmount;                  // сумма лимита (limitMultiplicity-кратная изначальная сумма на вклад)
+    private double monthlyCapitalization;        // ежемесячная капитализация по депозиту
+    private double termCapitalization;           // суммарная капитализация на текущий срок вклада
+    private double termPayment;                  // суммарное пополнение на текущий срок вклада
+    private double limitAmount;                  // сумма лимита (limitMultiplicity-кратная изначальная сумма на вклад)
 
     // Дополнительные поля класса
     private static boolean isSourceDataIncorrect = true;                        // флаг проверки корректности ввода
@@ -43,101 +40,101 @@ public class DepositCalc {
     }
 
     // Конструкторы
-    public DepositCalc() {
+    public DepositCalculation() {
 
     }
 
     // Сеттеры и геттеры
-    public static void setInitialPayment(double initialPayment) {
+    public void setInitialPayment(double initialPayment) {
         while (initialPayment < 0) {
             System.out.print("Ошибка: число < 0, повторите ввод (допустимые значения: 0 и натуральные числа): ");
             initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.initialPayment = initialPayment;
+        this.initialPayment = initialPayment;
     }
 
-    public static double getInitialPayment() {
+    public double getInitialPayment() {
         return initialPayment;
     }
 
-    public static void setMonthlyPayment(double monthlyPayment) {
+    public void setMonthlyPayment(double monthlyPayment) {
         while (monthlyPayment < 0) {
             System.out.print("Ошибка: число < 0. Повторите ввод (допустимые значения: 0 и натуральные числа): ");
             monthlyPayment = Double.parseDouble(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.monthlyPayment = monthlyPayment;
+        this.monthlyPayment = monthlyPayment;
     }
 
-    public static double getMonthlyPayment() {
+    public double getMonthlyPayment() {
         return monthlyPayment;
     }
 
-    public static void setLimitMultiplicity(short limitMultiplicity) {
+    public void setLimitMultiplicity(short limitMultiplicity) {
         while (limitMultiplicity < 0) {
             System.out.print("Ошибка: число < 0. Повторите ввод (допустимые значения: 0 и натуральные числа): ");
             limitMultiplicity = Short.parseShort(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.limitMultiplicity = limitMultiplicity;
+        this.limitMultiplicity = limitMultiplicity;
     }
 
-    public static double getLimitMultiplicity() {
+    public double getLimitMultiplicity() {
         return limitMultiplicity;
     }
 
-    public static void setInitialPaymentPercent(float initialPaymentPercent) {
+    public void setInitialPaymentPercent(float initialPaymentPercent) {
         while (initialPaymentPercent < 0 || initialPaymentPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
             initialPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.initialPaymentPercent = initialPaymentPercent / 100;
+        this.initialPaymentPercent = initialPaymentPercent / 100;
     }
 
-    public static double getInitialPaymentPercent() {
+    public double getInitialPaymentPercent() {
         return initialPaymentPercent * 100;
     }
 
-    public static void setMonthlyPaymentPercent(float monthlyPaymentPercent) {
+    public void setMonthlyPaymentPercent(float monthlyPaymentPercent) {
         while (monthlyPaymentPercent < 0 || monthlyPaymentPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
             monthlyPaymentPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.monthlyPaymentPercent = monthlyPaymentPercent / 100;
+        this.monthlyPaymentPercent = monthlyPaymentPercent / 100;
     }
 
-    public static double getMonthlyPaymentPercent() {
+    public double getMonthlyPaymentPercent() {
         return monthlyPaymentPercent * 100;
     }
 
-    public static void setMonthlyCapitalizationPercent(float monthlyCapitalizationPercent) {
+    public void setMonthlyCapitalizationPercent(float monthlyCapitalizationPercent) {
         while (monthlyCapitalizationPercent < 0 || monthlyCapitalizationPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
             monthlyCapitalizationPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.monthlyCapitalizationPercent = monthlyCapitalizationPercent / 100;
+        this.monthlyCapitalizationPercent = monthlyCapitalizationPercent / 100;
     }
 
-    public static double getMonthlyCapitalizationPercent() {
+    public double getMonthlyCapitalizationPercent() {
         return monthlyCapitalizationPercent * 100;
     }
 
-    public static void setLimitAmountPercent(float limitAmountPercent) {
+    public void setLimitAmountPercent(float limitAmountPercent) {
         while (limitAmountPercent < 0 || limitAmountPercent > 100) {
             System.out.print("Ошибка: число < 0 или > 100. Повторите ввод (допустимые значения: от 0 до 100 включительно): ");
             limitAmountPercent = Float.parseFloat(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.limitAmountPercent = limitAmountPercent / 100;
+        this.limitAmountPercent = limitAmountPercent / 100;
     }
 
-    public static double getLimitAmountPercent() {
+    public double getLimitAmountPercent() {
         return limitAmountPercent * 100;
     }
 
-    public static void setDepositTerm(short depositTerm) {
+    public void setDepositTerm(short depositTerm) {
         while (depositTerm < 0) {
             System.out.print("Ошибка: число < 1. Повторите ввод (допустимые значения: натуральные числа): ");
             depositTerm = Short.parseShort(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
         }
-        DepositCalc.depositTerm = depositTerm;
+        this.depositTerm = depositTerm;
     }
 
     public static boolean getIsSourceDataIncorrect() {
@@ -145,15 +142,15 @@ public class DepositCalc {
     }
 
     public static void setIsSourceDataIncorrect(boolean isSourceDataIncorrect) {
-        DepositCalc.isSourceDataIncorrect = isSourceDataIncorrect;
+        DepositCalculation.isSourceDataIncorrect = isSourceDataIncorrect;
     }
 
-    public static double getDepositTerm() {
+    public double getDepositTerm() {
         return depositTerm;
     }
 
     public static void setIsSaveToFile(boolean isSaveToFile) {
-        DepositCalc.isSaveToFile = isSaveToFile;
+        DepositCalculation.isSaveToFile = isSaveToFile;
     }
 
     public static boolean getIsSaveToFile() {
@@ -162,7 +159,7 @@ public class DepositCalc {
 
     // Методы
     // Метод инициализации полей и проверки корректности ввода
-    public static void entryData() {
+    public void entryData() {
         while (isSourceDataIncorrect) {
             System.out.print("Введите исходную сумму: ");
             double initialPayment = Double.parseDouble(EntryHandler.enrtyStringHandler(regexIntAmdFloatNumbers));
@@ -229,7 +226,7 @@ public class DepositCalc {
     }
 
     // Метод определения варианта для сохранения результата (CLI|file)
-    public static void depositCalculation() {
+    public void depositCalculation() {
         entryData();
         System.out.print("Сохранить результаты рассчета в файл? (Да/Нет) ");
         EntryHandler.checkEntryConfirmationWithoutRepeatEntry();
@@ -244,7 +241,7 @@ public class DepositCalc {
     }
 
     // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в CLI
-    public static void incomeCalculationOutputCLI() {
+    public void incomeCalculationOutputCLI() {
         double sumEndMonth = 0;
         limitAmount = initialPayment * limitMultiplicity;
         System.out.println("Сумма лимита = " + (new DecimalFormat("###,###.##").format(limitAmount)));
@@ -283,7 +280,7 @@ public class DepositCalc {
     }
 
     // Метод рассчета выходных значений капитализации для одного объекта с выводом вычислений в файл
-    public static void incomeCalculationOutputFile(String fileName) {
+    public void incomeCalculationOutputFile(String fileName) {
         double sumEndMonth = 0;
         try {
             FileWriter file = new FileWriter(fileName, false);
@@ -338,13 +335,13 @@ public class DepositCalc {
         }
     }
 
-    public static void comparisonOfDeposits(){
+    public void comparisonOfDeposits() {
 
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         depositCalculation();
-//        DepositCalc depositCalc = new DepositCalc();
-//        depositCalc.incomeCalculationOutputCLI();
+        DepositCalculation depositCalculation = new DepositCalculation();
+        depositCalculation.incomeCalculationOutputCLI();
     }
 }
