@@ -29,15 +29,15 @@ public class EntryHandler {
         System.out.print("Данные корректны? (Да/Нет) ");
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
-        DepositCalculation.setIsSourceDataIncorrect(true);
+        Deposit.setIsSourceDataIncorrect(true);
         switch (answer) {
             case "Нет":
                 CosmeticAdditions.printSeparator();
                 System.out.println("Повторите ввод!");
-                DepositCalculation.setIsSourceDataIncorrect(true);
+                Deposit.setIsSourceDataIncorrect(true);
                 break;
             case "Да":
-                DepositCalculation.setIsSourceDataIncorrect(false);
+                Deposit.setIsSourceDataIncorrect(false);
                 break;
             default:
                 boolean repeat = true;
@@ -50,11 +50,11 @@ public class EntryHandler {
                         case "Нет":
                             CosmeticAdditions.printSeparator();
                             System.out.println("Повторите ввод!");
-                            DepositCalculation.setIsSourceDataIncorrect(true);
+                            Deposit.setIsSourceDataIncorrect(true);
                             repeat = false;
                             break;
                         case "Да":
-                            DepositCalculation.setIsSourceDataIncorrect(false);
+                            Deposit.setIsSourceDataIncorrect(false);
                             repeat = false;
                             break;
                         default:
@@ -63,20 +63,20 @@ public class EntryHandler {
                 }
                 break;
         }
-        return DepositCalculation.getIsSourceDataIncorrect();
+        return Deposit.getIsSourceDataIncorrect();
     }
 
     // Метод, проверяющий корректность бинарного выбора
     public static boolean checkEntryConfirmationWithoutRepeatEntry() {
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
-        DepositCalculation.setIsSaveToFile(false);
+        Deposit.setIsSaveToFile(false);
         switch (answer) {
             case "Нет":
-                DepositCalculation.setIsSaveToFile(false);
+                Deposit.setIsSaveToFile(false);
                 break;
             case "Да":
-                DepositCalculation.setIsSaveToFile(true);
+                Deposit.setIsSaveToFile(true);
                 break;
             default:
                 boolean repeat = true;
@@ -85,11 +85,11 @@ public class EntryHandler {
                     answer = scanner.nextLine();
                     switch (answer) {
                         case "Нет":
-                            DepositCalculation.setIsSaveToFile(false);
+                            Deposit.setIsSaveToFile(false);
                             repeat = false;
                             break;
                         case "Да":
-                            DepositCalculation.setIsSaveToFile(true);
+                            Deposit.setIsSaveToFile(true);
                             repeat = false;
                             break;
                         default:
@@ -98,6 +98,6 @@ public class EntryHandler {
                 }
                 break;
         }
-        return DepositCalculation.getIsSourceDataIncorrect();
+        return Deposit.getIsSourceDataIncorrect();
     }
 }
