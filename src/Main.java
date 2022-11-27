@@ -3,15 +3,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Main {
-    private static int numberOfComparingDeposits;
-    private static String regex = "[1-4]+";
 
     public static void main(String[] args) {
-        //TODO: перенести в отдельный метод в класс DepositCalc
-        System.out.print("Введите число сравниваемых депозитов (не более 4): ");
-        String result = EntryHandler.enrtyStringHandler(regex);
-        numberOfComparingDeposits = Integer.parseInt(result);
-
+        int numberOfComparingDeposits = DepositCalculation.determineNumberOfDeposits();
         List<DepositCalculation> objects = new ArrayList<DepositCalculation>();
         HashMap<DepositCalculation, String> baseOfObjects = new HashMap<>();
         for (int i = 0; i < numberOfComparingDeposits; i++) {

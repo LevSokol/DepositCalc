@@ -14,7 +14,7 @@ public class EntryHandler {
     }
 
     // Метод, ограничивающий ввод пустой строки
-    public static String enrtyStringEmpty() {
+    public static String entryStringEmpty() {
         Scanner scanner = new Scanner(System.in);
         String string = scanner.nextLine();
         while (string.isEmpty()) {
