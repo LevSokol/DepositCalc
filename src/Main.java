@@ -1,9 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-
         Deposit deposit = new Deposit("Вкладывай", "Сбер");
-        deposit.depositCalculation();
+        deposit.profitabilityCalculation();
 
 /*        int numberOfComparingDeposits = Deposit.determineNumberOfDeposits();
         List<Deposit> objects = new ArrayList<Deposit>();
