@@ -15,6 +15,17 @@ public class Deposit {
     private float monthlyCapitalizationPercent; // процент на капитализацию
     private float limitAmountPercent;           // процент на превышение суммы лимита
     private short depositTerm;                  // срок вклада (в месяцах)
+    private boolean withReplenishment;          // возможность пополнения
+    private int withWithdrawal;                 // возможность снятия
+    private boolean keepIncomeOnDeposit;        // необходимость снятия процентов по вкладу
+    /*TODO:
+        0) Сделать ввод и сохранение в поля класса
+        1) сделать ввод запроса с пополнением (два варианта: с, без), снятием(три варианта: с, без, только процентов)
+    *   2) сделать обработку: если со снятием, то капитализация не учитывается
+        3) добавить информацию о пополнении/снятии во все выводы по вкладам (CLI/FILE)
+        4) если есть необходиомсть снятия процентов, не использовать капитализацию в ежемесячном рассчете процентов
+    */
+
 
     // Рассчетные данные
     private double monthlyCapitalization;       // ежемесячная капитализация по депозиту
@@ -32,6 +43,15 @@ public class Deposit {
     }
 
     // Сеттеры и геттеры
+
+    public String getDepositsName() {
+        return depositsName;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
     public void setInitialPayment(double initialPayment) {
         while (initialPayment < 0) {
             System.out.print("Ошибка: число < 0, повторите ввод (допустимые значения: 0 и натуральные числа): ");
@@ -138,7 +158,7 @@ public class Deposit {
     /**
      * Метод инициализации полей и проверки корректности ввода
      */
-    public void entryData() {
+    public void entryDepositSourceData() {
         boolean isSourceDataСorrect = false;
         while (!isSourceDataСorrect) {
             System.out.print("Введите исходную сумму: ");
@@ -226,7 +246,7 @@ public class Deposit {
      * Метод расчета доходности по депозиту
      */
     public void profitabilityCalculation() {
-        entryData();
+        entryDepositSourceData();
         isSaveToFile();
     }
 
@@ -335,7 +355,27 @@ public class Deposit {
         }
     }
 
-    public void main(String[] args) {
+    public boolean isWithReplenishment() {
+        return withReplenishment;
+    }
 
+    public void setWithReplenishment(boolean withReplenishment) {
+        this.withReplenishment = withReplenishment;
+    }
+
+    public int getWithWithdrawal() {
+        return withWithdrawal;
+    }
+
+    public void setWithWithdrawal(int withWithdrawal) {
+        this.withWithdrawal = withWithdrawal;
+    }
+
+    public boolean isKeepIncomeOnDeposit() {
+        return keepIncomeOnDeposit;
+    }
+
+    public void setKeepIncomeOnDeposit(boolean keepIncomeOnDeposit) {
+        this.keepIncomeOnDeposit = keepIncomeOnDeposit;
     }
 }
